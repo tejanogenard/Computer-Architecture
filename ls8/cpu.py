@@ -71,13 +71,18 @@ class CPU:
 
         print()
 
+    def LDI(self):
+        """Load Register Immediate: set the value of a register to an integer"""
+        operand_num = self.ram_read(self.pc + 1)
+        operand_value = self.ram_read(self.pc + 2)
+        self.register[operand_num] = operand_value
 
 
 
     def PRN(self):
         """Print Register: print the numeric value stored in a given register"""
         address = self.ram_read(self.pc + 1)
-        print(self.reg[address])
+        print(self.register[address])
 
     def HLT(self):
         """Halt: halt the CPU (& exit the emulator)"""
@@ -99,15 +104,11 @@ class CPU:
 
             if ir == LDI:  # PRINT_BEEJ
                 self.LDI()
-                pc += 1
+                self.pc += 3
 
             elif ir == PRN:
                 self.PRN() 
-                pc += 2 
+                self.pc += 2 
 
             elif ir == HLT:  # SAVE_REG
                 self.HLT() 
-                pc += 3 
-
-            else:
-                print(f"Unknown instruction {b}")
