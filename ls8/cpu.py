@@ -1,6 +1,9 @@
 """CPU functionality."""
 
 import sys
+print(sys.argv[0])
+print(sys.argv[1])
+
 
 class CPU:
     """Main CPU class."""
@@ -27,19 +30,23 @@ class CPU:
 
         # For now, we've just hardcoded a program:
 
-        program = [
-            # From print8.ls8
-            0b10000010, # LDI R0,8
-            0b00000000,
-            0b00001000,
-            0b01000111, # PRN R0
-            0b00000000,
-            0b00000001, # HLT
-        ]
+        with open(sys.argv[1]) as f:
+            for line in f:
+                t = line.split('#')
+                n = t[0].strip()
 
-        for instruction in program:
-            self.ram[address] = instruction
+                if n == '':
+                    continue
+            
+            try:
+                n = int(n)
+            except ValueError:
+                print(f"Invalid number '{n}'")
+                sys.exit(1)
+
+            self.ram[address] = n
             address += 1
+
 
 
     def alu(self, op, reg_a, reg_b):
@@ -76,8 +83,6 @@ class CPU:
         operand_num = self.ram_read(self.pc + 1)
         operand_value = self.ram_read(self.pc + 2)
         self.register[operand_num] = operand_value
-
-
 
     def PRN(self):
         """Print Register: print the numeric value stored in a given register"""
