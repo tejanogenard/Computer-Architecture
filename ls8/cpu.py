@@ -204,4 +204,14 @@ class CPU:
             elif ir == CMP: 
                 self.CMP()
 
+            elif ir == JMP:
+                self.JMP()
+
+            elif ir == JNE: 
+                self.JNE()
+            
+            elif ir == JEQ: 
+                self.JEQ()
+
+
                 
